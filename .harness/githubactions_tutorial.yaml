@@ -1,0 +1,38 @@
+pipeline:
+  name: github-actions tutorial
+  identifier: githubactions_tutorial
+  projectIdentifier: github
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: gitconnector
+        build: <+input>
+  stages:
+    - stage:
+        name: build go
+        identifier: build_go
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Arm64
+          runtime:
+            type: Docker
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: build_go App
+                  identifier: build_go_App
+                  spec:
+                    shell: Sh
+                    command: |-
+                      echo "Welcome to Go app"
+                      go mod init Golang-CICD-Tutorial
+                      go build
+                      go test
